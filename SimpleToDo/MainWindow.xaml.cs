@@ -1,4 +1,5 @@
-﻿using SimpleToDo.Models;
+﻿using SimpleToDo.Data;
+using SimpleToDo.Models;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,11 +22,39 @@ namespace SimpleToDo
         public MainWindow()
         {
             InitializeComponent();
+            tasks = TaskStorage.LoadTasks();
+            TaskDataGrid.ItemsSource = tasks;
         }
 
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
+            string title = TitleTextBox.Text.Trim();
+            TextRange textRange = new(DescriptionBox.Document.ContentStart, DescriptionBox.Document.ContentEnd);
+            string description = textRange.Text.Trim();
+            DateTime? dueDate = DueDatePicker.SelectedDate;
 
+            if(string.IsNullOrEmpty(title) || dueDate == null)
+            {
+                MessageBox.Show("vyplň datum a název úkolu.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var newTask = new TaskItem 
+            { 
+                Title = title,
+                Description = description,
+                DueDate = dueDate.Value,
+                IsCompleted = false
+            };
+
+
+            tasks.Add(newTask);
+            TaskStorage.SaveTasks(tasks);
+            TaskDataGrid.Items.Refresh();
+
+            TitleTextBox.Clear();
+            DescriptionBox.Document.Blocks.Clear();
+            DueDatePicker.SelectedDate = null;
         }
     }
 }
