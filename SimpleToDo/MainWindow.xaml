@@ -9,12 +9,12 @@
     <Grid>
         <StackPanel Width="600" Height="350">
             <Label Content="Název úkolu:" FontWeight="Bold"/>
-            <TextBox Height="30" Width="300" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0 0 0 10"/>
+            <TextBox x:Name="TitleTextBox" Height="30" Width="300" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0 0 0 10"/>
             <Label Content="Popis:" FontWeight="Bold"/>
-            <RichTextBox Height="100" Margin="0 0 0 10"/>
-            <DatePicker Height="30" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0 0 0 10"/>
-            <Button Content="Přidat úkol" Height="30" Width="200" HorizontalAlignment="Left" Margin="0 0 0 20"/>
-            <DataGrid Height="50"/>
+            <RichTextBox x:Name="DescriptionBox" Height="100" Margin="0 0 0 10"/>
+            <DatePicker x:Name="DueDatePicker" Height="30" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0 0 0 10"/>
+            <Button x:Name="AddTaskButton" Content="Přidat úkol" Height="30" Width="200" HorizontalAlignment="Left" Margin="0 0 0 20" Click="AddTaskButton_Click"/>
+            <DataGrid x:Name="TaskDataGrid" VerticalAlignment="Stretch"/>
         </StackPanel>
     </Grid>
 </Window>
