@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleToDo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Simple To Do" Height="450" Width="800">
     <Grid>
-
+        <StackPanel Width="600" Height="350">
+            <Label Content="Název úkolu:" FontWeight="Bold"/>
+            <TextBox Height="30" Width="300" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0 0 0 10"/>
+            <Label Content="Popis:" FontWeight="Bold"/>
+            <RichTextBox Height="100" Margin="0 0 0 10"/>
+            <DatePicker Height="30" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0 0 0 10"/>
+            <Button Content="Přidat úkol" Height="30" Width="200" HorizontalAlignment="Left" Margin="0 0 0 20"/>
+            <DataGrid Height="50"/>
+        </StackPanel>
     </Grid>
 </Window>
