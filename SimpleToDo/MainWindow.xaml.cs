@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace SimpleToDo
 {
@@ -18,7 +19,7 @@ namespace SimpleToDo
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<TaskItem> tasks = new();
+        private ObservableCollection<TaskItem> tasks;
         public MainWindow()
         {
             InitializeComponent();
@@ -50,11 +51,27 @@ namespace SimpleToDo
 
             tasks.Add(newTask);
             TaskStorage.SaveTasks(tasks);
-            TaskDataGrid.Items.Refresh();
-
+            
             TitleTextBox.Clear();
             DescriptionBox.Document.Blocks.Clear();
             DueDatePicker.SelectedDate = null;
+            TitleTextBox.Focus();
+        }
+
+        private void DeleteTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(TaskDataGrid.SelectedItem is TaskItem selectedTask)
+            {
+                if (MessageBox.Show("Opravdu chcete tento úkol smazat?", "Potvrzení", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    tasks.Remove(selectedTask);
+                    TaskStorage.SaveTasks(tasks);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vyberte úkol, který chcete smazat.", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
