@@ -13,9 +13,13 @@
             <Label Content="Popis:" FontWeight="Bold"/>
             <RichTextBox x:Name="DescriptionBox" Height="50" Margin="0 0 0 10"/>
             <DatePicker x:Name="DueDatePicker" Height="30" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0 0 0 10"/>
-            <Button x:Name="AddTaskButton" Content="Přidat úkol" Height="30" Width="200" HorizontalAlignment="Left" Margin="0 0 0 10" Click="AddTaskButton_Click"/>
-            <Button x:Name="DeleteTaskButton" Content="Smazat úkol" Height="30" Width="200" HorizontalAlignment="Left" Margin="0 0 0 20" Click="DeleteTaskButton_Click"/>
-            <DataGrid x:Name="TaskDataGrid" Height="200" VerticalAlignment="Stretch"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
+                <Button x:Name="AddTaskButton" Content="Přidat úkol" Height="30" Width="100" Margin="0 0 10 0" Click="AddTaskButton_Click"/>
+                <Button x:Name="DeleteTaskButton" Content="Smazat úkol" Height="30" Width="100" Margin="0 0 10 0" Click="DeleteTaskButton_Click"/>
+                <Button x:Name="EditTaskButton" Content="Upravit úkol" Height="30" Width="100" Click="EditTaskButton_Click"/>
+            </StackPanel>
+            
+            <DataGrid x:Name="TaskDataGrid" Height="200" VerticalAlignment="Stretch" SelectionChanged="TaskDataGrid_SelectionChanged"/>
         </StackPanel>
     </Grid>
 </Window>

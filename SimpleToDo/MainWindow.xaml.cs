@@ -23,6 +23,7 @@ namespace SimpleToDo
         public MainWindow()
         {
             InitializeComponent();
+            TaskDataGrid.Items.Clear();
             tasks = TaskStorage.LoadTasks();
             TaskDataGrid.ItemsSource = tasks;
         }
@@ -71,6 +72,52 @@ namespace SimpleToDo
             else
             {
                 MessageBox.Show("Vyberte úkol, který chcete smazat.", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void TaskDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(TaskDataGrid.SelectedItem is TaskItem selectedTask)
+            {
+                TitleTextBox.Text = selectedTask.Title;
+                DescriptionBox.Document.Blocks.Clear();
+                DescriptionBox.Document.Blocks.Add(new Paragraph(new Run(selectedTask.Description)));
+                DueDatePicker.SelectedDate = selectedTask.DueDate;
+            }
+        }
+
+        private void EditTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TaskDataGrid.SelectedItem is TaskItem selectedTask)
+            {
+                string newTitle = TitleTextBox.Text.Trim();
+                TextRange textRange = new(DescriptionBox.Document.ContentStart, DescriptionBox.Document.ContentEnd);
+                string newDescription = textRange.Text.Trim();
+                DateTime? newDueDate = DueDatePicker.SelectedDate;
+
+                if (string.IsNullOrEmpty(newTitle) || newDueDate == null)
+                {
+                    MessageBox.Show("Vyplň datum a název úkolu.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                selectedTask.Title = newTitle;
+                selectedTask.Description = newDescription;
+                selectedTask.DueDate = newDueDate.Value;
+
+                TaskDataGrid.Items.Refresh();
+                TaskStorage.SaveTasks(tasks);
+                MessageBox.Show("Úkol upraven", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                TitleTextBox.Clear();
+                DescriptionBox.Document.Blocks.Clear();
+                DueDatePicker.SelectedDate = null;
+                TitleTextBox.Focus();
+
+            }
+            else
+            {
+                MessageBox.Show("Vyberte úkol k úpravě.", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }
